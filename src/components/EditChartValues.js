@@ -14,6 +14,8 @@ import { styled } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 import { editChartValues } from '../redux/Chart/chartAction';
 import CloseIcon from '@mui/icons-material/Close';
+import BarChart from './BarChart';
+import PieChart from './PieChart';
 
 // import TextField from '../FormsCompoent/TextFeild/index';
 const StyledCard = styled(Paper)`
@@ -77,55 +79,66 @@ function EditChartValues(props) {
 			aria-describedby="modal-modal-description"
 		>
 			<StyledCard elevation={3}>
-				<form onSubmit={editChart}>
-					<Grid container>
-						<Grid item xs={11}>
-							<Typography variant="h4">
-								Edit Values for chart {values.id}
-							</Typography>
-						</Grid>
-
-						<Grid item xs={1}>
-							<IconButton color="error" onClick={() => handleClose(formState)}>
-								<CloseIcon />
-							</IconButton>
-						</Grid>
-					</Grid>
-
-					{formState.elements &&
-						formState.elements.map((x, index) => (
-							<Grid container key={index}>
-								<Grid
-									item
-									xs={2}
-									sx={{
-										alignSelf: 'center',
-										textAlign: 'center',
-									}}
-								>
-									<Typography variant="overline">
-										{values.label[index]}
+				<Grid container spacing={2}>
+					<Grid item sm={12} lg={8}>
+						<form onSubmit={editChart}>
+							<Grid container>
+								<Grid item xs={11}>
+									<Typography variant="h4">
+										Edit Values for chart {values.id}
 									</Typography>
 								</Grid>
-								<Grid item xs={8}>
-									<FormControl fullWidth sx={{ m: '1rem 0' }}>
-										<TextField
-											type="number"
-											label="Vlaue"
-											name={`${x}`}
-											value={x}
-											onChange={(event) => handleValueUpdate(index, event)}
-											aria-describedby="enter value"
-										/>
-									</FormControl>
+
+								<Grid item xs={1}>
+									<IconButton
+										color="error"
+										onClick={() => handleClose(formState)}
+									>
+										<CloseIcon />
+									</IconButton>
 								</Grid>
 							</Grid>
-						))}
 
-					<Button variant="outlined" type="submit" color="secondary">
-						Edit Values
-					</Button>
-				</form>
+							{formState.elements &&
+								formState.elements.map((x, index) => (
+									<Grid container key={index}>
+										<Grid
+											item
+											xs={2}
+											sx={{
+												alignSelf: 'center',
+												textAlign: 'center',
+											}}
+										>
+											<Typography variant="overline">
+												{values.label[index]}
+											</Typography>
+										</Grid>
+										<Grid item xs={8}>
+											<FormControl fullWidth sx={{ m: '1rem 0' }}>
+												<TextField
+													type="number"
+													label="Vlaue"
+													name={`${x}`}
+													value={x}
+													onChange={(event) => handleValueUpdate(index, event)}
+													aria-describedby="enter value"
+												/>
+											</FormControl>
+										</Grid>
+									</Grid>
+								))}
+
+							<Button variant="outlined" type="submit" color="secondary">
+								Save and Close
+							</Button>
+						</form>
+					</Grid>
+					<Grid item sm={12} lg={4}>
+						{formState.type === 'Bar' && <BarChart data={formState} />}
+						{formState.type === 'Pie' && <PieChart data={formState} />}
+					</Grid>
+				</Grid>
 			</StyledCard>
 		</Modal>
 	);

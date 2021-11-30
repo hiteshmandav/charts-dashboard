@@ -36,40 +36,40 @@ function DashBoard() {
 
 	return (
 		<>
-			{/* {!openEditPaned && ( */}
 			<EditChartValues
 				isOpen={openEditPaned.state}
 				values={openEditPaned.data}
 				handleClose={(data) => handleEditClose(data)}
 			/>
-			{/* )} */}
-			<Grid container spacing={2}>
-				{chartData.map((data) => {
-					return (
-						<Grid item xs={6} key={data.id}>
-							<StyledCard elevation={3}>
-								<Grid container spacing={2}>
-									<Grid item xs={10}>
-										<Typography variant="overline">
-											CHart : {data.id}
-										</Typography>
+			<Grid item sm={12} lg={!openEditPaned ? 8 : 12}>
+				<Grid container spacing={2}>
+					{chartData.map((data) => {
+						return (
+							<Grid item xs={6} key={data.id}>
+								<StyledCard elevation={3}>
+									<Grid container spacing={2}>
+										<Grid item xs={10}>
+											<Typography variant="overline">
+												CHart : {data.id}
+											</Typography>
+										</Grid>
+										<Grid item xs={2}>
+											<IconButton
+												color="secondary"
+												onClick={() => setopenEditPaned({ state: true, data })}
+											>
+												<EditIcon />
+											</IconButton>
+										</Grid>
 									</Grid>
-									<Grid item xs={2}>
-										<IconButton
-											color="secondary"
-											onClick={() => setopenEditPaned({ state: true, data })}
-										>
-											<EditIcon />
-										</IconButton>
-									</Grid>
-								</Grid>
 
-								{data.type === 'Bar' && <BarChart data={data} />}
-								{data.type === 'Pie' && <PieChart data={data} />}
-							</StyledCard>
-						</Grid>
-					);
-				})}
+									{data.type === 'Bar' && <BarChart data={data} />}
+									{data.type === 'Pie' && <PieChart data={data} />}
+								</StyledCard>
+							</Grid>
+						);
+					})}
+				</Grid>
 			</Grid>
 		</>
 	);
