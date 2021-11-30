@@ -1,0 +1,2 @@
+export const SET_ALL_CHARTS = 'SET_ALL_CHARTS';
+export const EDIT_CHART_VALUES = 'EDIT_CHART_VALUE';
